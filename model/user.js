@@ -16,8 +16,10 @@ export default class User {
     borrowBook(book) {
         if (this.borrowedBooksNumber < User.MAX_BORROW_LIMIT) {
             this.borrowedBooks.push(book);
+            return true;
         } else {
             console.log('superato il limite, passa a premium!!');
+            return false;
         }
     }
 

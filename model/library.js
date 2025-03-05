@@ -20,8 +20,20 @@ export default class Library {
         this.books.push(book);
     }
 
+    getBookByIsbn(isbn) {
+        return this.books.find(book => book.isbn === isbn);
+    }
+
+    getUserById(userId) {
+        return this.users.find(user => user.id === userId);
+    }
+
     removeBook(bookToRemove) {
         this.books = this.books.filter(book => book.isbn !== bookToRemove.isbn);
+    }
+
+    removeBookByIsbn(isbnToRemove) {
+        this.books = this.books.filter(book => book.isbn !== isbnToRemove);
     }
 
     isBookAvailable(isbn) {
@@ -45,6 +57,10 @@ export default class Library {
         this.users = this.users.filter(user => user.id !== userToRemove.id);
     }
 
+    removeUserById(userIdToRemove) {
+        this.users = this.users.filter(user => user.id !== userIdToRemove);
+    }
+
     listBooks() {
         this.books.forEach(book => console.log(book.toString()));
     }
@@ -60,10 +76,12 @@ export default class Library {
         if (!isAvailable) {
             console.log('libro non disponibile')
         } else {
-            user.borrowBook(book);
-            const isPhysical = book instanceof PhysicalBook;
-            if (isPhysical) {
-                book.isBorrowed = true;
+            if (user.borrowBook(book)) {
+                console.log('libro prestato con successo')
+                const isPhysical = book instanceof PhysicalBook;
+                if (isPhysical) {
+                    book.isBorrowed = true;
+                }
             }
         }
     }
